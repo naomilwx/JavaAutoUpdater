@@ -1,11 +1,13 @@
 package htlauncher.updater;
 
-import htlauncher.descriptors.AppDescriptor;
+import htlauncher.utilities.AppDescriptor;
 
 import java.net.URI;
 import java.util.HashMap;
 
 public class UpdateManager {
+	private static final String UPDATER_INFO_FILE = "updater_data";
+	
 	private URI serverAppInfoURL;
 	private AppDescriptor appDescriptor;
 	private HashMap<String, Double> downloadedVersions;

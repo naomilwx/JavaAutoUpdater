@@ -1,7 +1,7 @@
 package htlauncher.launcher;
 
-import htlauncher.descriptors.AppDescriptor;
 import htlauncher.updater.UpdateManager;
+import htlauncher.utilities.AppDescriptor;
 
 
 public class AppLauncher {
