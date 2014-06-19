@@ -2,21 +2,34 @@ package htlauncher.updater;
 
 import htlauncher.utilities.AppDescriptor;
 
+import java.io.File;
 import java.net.URI;
 import java.util.HashMap;
 
 public class UpdateManager {
-	private static final String UPDATER_INFO_FILE = "updater_data";
 	
-	private URI serverAppInfoURL;
 	private AppDescriptor appDescriptor;
-	private HashMap<String, Double> downloadedVersions;
+	private UpdateDataManager dataManager;
 	
-	protected void updateDownloadedVersion(String name, double version){
-		downloadedVersions.put(name, version);
+	public UpdateManager(String appInfoPath){
+		dataManager = new UpdateDataManager(appInfoPath);
 	}
 	
-	protected double getDownloadedVersion(String name){
-		return downloadedVersions.get(name);
+	public URI getAppLaunchPath(){
+		return appDescriptor.getLaunchPath();
 	}
+	
+	public void runUpdate(){
+		
+	}
+	
+	public void updateAppDetails(){
+		
+	}
+	
+	public void updateAppComponents(){
+		
+	}
+	
+	
 }

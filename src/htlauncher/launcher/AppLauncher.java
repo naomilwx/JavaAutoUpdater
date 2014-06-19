@@ -1,13 +1,10 @@
 package htlauncher.launcher;
 
 import htlauncher.updater.UpdateManager;
-import htlauncher.utilities.AppDescriptor;
-
 
 public class AppLauncher {
-	public static final String APP_INFO_FILE = "HubTurbo.xml";
+	public static final String APP_INFO_FILEPATH = "HubTurbo.xml";
 	
-	private AppDescriptor appDescriptor;
 	private UpdateManager updater;
 	private Process appProcess;
 	
@@ -16,11 +13,11 @@ public class AppLauncher {
 		
 	}
 	
-	public void run(){
+	public AppLauncher(){
 		
 	}
 	
-	public void loadAppDetails(){
+	public void run(){
 		
 	}
 	
@@ -31,4 +28,5 @@ public class AppLauncher {
 	public void launchApp(){
 		
 	}
+	
 }
