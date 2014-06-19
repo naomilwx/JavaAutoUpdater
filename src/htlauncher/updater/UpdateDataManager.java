@@ -15,8 +15,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Set;
-
 
 public class UpdateDataManager {
 	private static final String UPDATER_INFO_FILEPATH = "updater_data";
