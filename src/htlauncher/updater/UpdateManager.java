@@ -1,6 +1,7 @@
 package htlauncher.updater;
 
 
+import htlauncher.updater.ui.UpdateProgressWindow;
 import htlauncher.utilities.ComponentDescriptor;
 
 import java.net.URI;
@@ -11,16 +12,23 @@ public class UpdateManager {
 	private UpdateDataManager dataManager;
 	private ServerLiason server;
 	private URI appInfoURI;
+	private UpdateProgressWindow progressWindow;
 	
 	public UpdateManager(String appInfoPath){
-		dataManager = new UpdateDataManager(appInfoPath);
-		server = new ServerLiason();
 		try {
+			setupComponents(appInfoPath);
 			this.appInfoURI = new URI(appInfoPath);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void setupComponents(String appPath){
+		dataManager = new UpdateDataManager(appPath);
+		server = new ServerLiason();
+		progressWindow = new UpdateProgressWindow();
+		progressWindow.showWindow();
 	}
 	
 	public void runUpdate(){

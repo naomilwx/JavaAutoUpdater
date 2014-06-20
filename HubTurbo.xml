@@ -3,10 +3,10 @@
 	<components>
     	<component>
         	<name>test component</name>
-        	<localURI>test1.jar</localURI>
+        	<localURI>test.jar</localURI>
         	<serverURI>http://localhost/TestJnlp.jar</serverURI>
         	<version>1.0</version>
     	</component>
 	</components>
-    <mainJAR>http://localhost/TestJnlp.jar</mainJAR>
+    <mainJAR>test.jar</mainJAR>
 </application>
