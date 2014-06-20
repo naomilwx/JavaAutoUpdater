@@ -27,7 +27,7 @@ public class UpdateManager {
 	
 	public void setupComponents(String appPath){
 		progressWindow = new UpdateProgressWindow();
-		progressWindow.showWindow();
+		progressWindow.setWindowVisibility(true);
 		dataManager = new UpdateDataManager(appPath);
 		server = new ServerLiason();
 	}

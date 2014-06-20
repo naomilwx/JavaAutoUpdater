@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.lang.ref.WeakReference;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,17 +36,21 @@ public class UpdateProgressWindow extends JFrame {
      });
 	}
 	
-	public void showWindow(){
-		UpdateProgressWindow selfRef = this;
+	public void setWindowVisibility(boolean visible){
+		WeakReference<UpdateProgressWindow> selfRef = new WeakReference<UpdateProgressWindow>(this);
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					selfRef.setVisible(true);
+					selfRef.get().setVisible(visible);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	public void setProgressBarMax(int max){
+		progressBar.setMaximum(max);
 	}
 	
 	/**
