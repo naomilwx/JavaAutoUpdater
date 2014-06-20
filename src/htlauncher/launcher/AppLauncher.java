@@ -2,7 +2,6 @@ package htlauncher.launcher;
 
 import java.io.IOException;
 import java.net.URI;
-
 import htlauncher.updater.UpdateManager;
 
 public class AppLauncher {
@@ -13,8 +12,7 @@ public class AppLauncher {
 	
 	public static void main(String[] args) {
 		AppLauncher launcher = new AppLauncher();
-		//uncomment when ready
-//		launcher.run();
+		launcher.run();
 	}
 	
 	public AppLauncher(){

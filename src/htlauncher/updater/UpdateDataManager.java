@@ -18,6 +18,7 @@ import java.util.Map.Entry;
 
 public class UpdateDataManager {
 	private static final String UPDATER_INFO_FILEPATH = "updater_data";
+	private static final String SPLIT_MARKER = "<-sp->";
 	
 	private File updaterInfoFile;
 	private File appInfoFile;
@@ -69,7 +70,7 @@ public class UpdateDataManager {
 			
 			String line;
 			while((line = fileReader.readLine()) != null){
-				String[] lineArr = line.split("\\s+");
+				String[] lineArr = line.split(SPLIT_MARKER);
 				if(lineArr.length == 2){
 					String name = lineArr[0];
 					Double ver = Double.parseDouble(lineArr[1]);
@@ -97,7 +98,7 @@ public class UpdateDataManager {
 			
 			for(Entry<String, Double> entry : downloadedVersions.entrySet()){
 				String entryString = entry.getKey();
-				entryString += " " + entry.getValue();
+				entryString += SPLIT_MARKER + entry.getValue();
 				fileWriter.write(entryString);
 				fileWriter.write("\n");
 			}
