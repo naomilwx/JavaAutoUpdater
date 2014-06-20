@@ -7,13 +7,11 @@ import htlauncher.utilities.ComponentDescriptor;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class UpdateManager {
-	private static final String PROGRESS_DISPLAY_TEXT_FORMAT = "Downloading component: %1s";
-	
+public class UpdateManager {	
 	private UpdateDataManager dataManager;
 	private FileDownloader server;
 	private URI appInfoURI;
-	private UpdateProgressWindow progressWindow;
+	private DownloadProgressDisplay downloadProgress;
 	
 	public UpdateManager(String appInfoPath){
 		try {
@@ -26,22 +24,23 @@ public class UpdateManager {
 	}
 	
 	public void setupComponents(String appPath){
-		progressWindow = new UpdateProgressWindow();
-		progressWindow.setWindowVisibility(true);
+		downloadProgress = new DownloadProgressDisplay();
 		dataManager = new UpdateDataManager(appPath);
 		server = new FileDownloader();
 	}
 	
 	public void runUpdate(){
+		downloadProgress.showProgressWindow();
 		updateAppDetails();
 		updateAppComponents();
+		downloadProgress.hideProgressWindow();
 	}
 	
 	public void updateAppDetails(){
 		URI serverURI = dataManager.serverAppInfoURI;
 		if(serverURI != null && appInfoURI != null){
 			//overwrite with file from server
-			server.downloadFile(serverURI, appInfoURI);
+			server.downloadFile(serverURI, appInfoURI, downloadProgress);
 		}
 		dataManager.loadAppData();
 	}
@@ -58,9 +57,9 @@ public class UpdateManager {
 		double latestVer = component.getVersion();
 		double currentVer = dataManager.getDownloadedVersion(name);
 		if(latestVer > currentVer){
-			progressWindow.setDisplayedText(String.format(PROGRESS_DISPLAY_TEXT_FORMAT, component.getComponentName()));
+			downloadProgress.updateDownloadingComponent(component.getComponentName());
 			//update jar for component from server
-			server.downloadFile(component.getServerURI(), component.getLocalURI());
+			server.downloadFile(component.getServerURI(), component.getLocalURI(), downloadProgress);
 			//update success: update downloaded component version
 			dataManager.updateDownloadedVersion(name, latestVer);
 		}

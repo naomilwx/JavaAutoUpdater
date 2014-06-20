@@ -5,7 +5,7 @@
         	<name>test component</name>
         	<localURI>HubTurbo.jar</localURI>
         	<serverURI>http://localhost/HubTurbo.jar</serverURI>
-        	<version>1.0</version>
+        	<version>2.0</version>
     	</component>
 	</components>
     <mainJAR>HubTurbo.jar</mainJAR>

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,7 +34,7 @@ public class UpdateProgressWindow extends JFrame {
              public void run() {
             	 progressDescription.setText(text);
              }
-     });
+		});
 	}
 	
 	public void setWindowVisibility(boolean visible){
@@ -50,17 +51,42 @@ public class UpdateProgressWindow extends JFrame {
 	}
 	
 	public void setProgressBarMax(int max){
-		progressBar.setMaximum(max);
+		SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run() {
+            	progressBar.setMaximum(max);
+            }
+		});
+	}
+	
+	public void setProgress(int progress){
+		//TODO: in order for progress bar update to be seen use invokeandwait
+		SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run() {
+            	progressBar.setValue(progress);
+            }
+		});
 	}
 	
 	/**
 	 * Create the frame.
 	 */
 	public UpdateProgressWindow() {
-		setupMainWindow();
-		setupContentPane();
-		setupProgressBar();
-		setupProgressLabel();
+		try {
+			SwingUtilities.invokeAndWait(new Runnable(){
+			    @Override
+			    public void run() {
+			    	setupMainWindow();
+					setupContentPane();
+					setupProgressBar();
+					setupProgressLabel();
+			    }
+			});
+		} catch (InvocationTargetException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void setupMainWindow(){

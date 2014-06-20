@@ -49,45 +49,56 @@ public class FileDownloader {
 		return buffOut;
 	}
 	
-	private void download(BufferedInputStream buffInput, BufferedOutputStream buffOut) throws IOException{
+	private void download(BufferedInputStream buffInput, BufferedOutputStream buffOut, DownloadProgressDisplay progress) throws IOException{
 		byte[] buff = new byte[FileDownloader.BUFFER_SIZE];
 		
 		int bytesRead = 0;
 		totalBytesRead = 0;
 		while((bytesRead = buffInput.read(buff)) > 0){
 			totalBytesRead += bytesRead;
+			progress.updateBytesDownloaded(totalBytesRead);
 			buffOut.write(buff, 0, bytesRead);
 		}
 	}
 	
-	public void downloadFile(URI source, URI destination){
+	
+	private void closeIOStreams(BufferedInputStream buffInput, BufferedOutputStream buffOut){
+		try {
+			if(buffInput != null){
+				buffInput.close();
+			}
+			if(buffOut != null){
+				buffOut.flush();
+				buffOut.close();
+			}
+			
+		} catch (IOException e) {
+		// TODO Auto-generated catch block
+			e.printStackTrace();				
+		}
+	}
+	
+	
+	private void handleDownloadEnd(BufferedInputStream buffInput, BufferedOutputStream buffOut){
+		totalBytesRead = 0;
+		totalBytes = 0;
+		closeIOStreams(buffInput, buffOut);
+	}
+	public void downloadFile(URI source, URI destination, DownloadProgressDisplay progress){
 		BufferedInputStream buffInput = null;
 		BufferedOutputStream buffOut = null;
 		try {
 			buffInput = setupStreamFromSource(source);
 			buffOut = setupStreamToDestination(destination);
+			progress.updateDownloadSize(totalBytes);
 			
-			download(buffInput, buffOut);
+			download(buffInput, buffOut, progress);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
-			totalBytesRead = 0;
-			totalBytes = 0;
-			try {
-				if(buffInput != null){
-					buffInput.close();
-				}
-				if(buffOut != null){
-					buffOut.flush();
-					buffOut.close();
-				}
-				
-			} catch (IOException e) {
-			// TODO Auto-generated catch block
-				e.printStackTrace();				
-			}
-			
+			handleDownloadEnd(buffInput, buffOut);
 		}
 	}
+	
 }
