@@ -25,8 +25,18 @@ public class ComponentDescriptor {
 	public double getVersion(){
 		return version;
 	}
+	
+	public void setVersion(double version){
+		this.version = version;
+	}
+	
+	@XmlElement
 	public URI getLocalURI(){
 		return localURI;
+	}
+	
+	public void setLocalURI(URI local){
+		this.localURI = local;
 	}
 	
 	@XmlElement
@@ -34,8 +44,9 @@ public class ComponentDescriptor {
 		return serverURI;
 	}
 	
-	public void setVersion(double version){
-		this.version = version;
+	public void setServerURI(URI server){
+		this.serverURI = server;
 	}
+	
 
 }

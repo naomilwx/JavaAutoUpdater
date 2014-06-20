@@ -16,14 +16,14 @@ import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-@XmlRootElement(name="Application")
+@XmlRootElement(name="application")
 @XmlSeeAlso({ComponentDescriptor.class})
 public class AppDescriptor {
 	private URI launchPath;
 	private URI serverAppDescriptorURI;
 	private ArrayList<ComponentDescriptor> components;
-	/*
-	public String serialiseToXML(boolean XMLTag){
+	
+	public String serialiseToXML(){
 		try {
 			JAXBContext context = JAXBContext.newInstance(AppDescriptor.class);
 			Marshaller marshaller = context.createMarshaller();
@@ -43,7 +43,7 @@ public class AppDescriptor {
 		}
 		return  "";
 	}
-	*/
+	
 	public static AppDescriptor unserialiseFromXMLFile(File file){
 		JAXBContext context;
 		try {
@@ -59,21 +59,21 @@ public class AppDescriptor {
 		return null;
 	}
 	
-	@XmlElement(name="MainJAR")
-	public URI getLaunchPath(){
-		return launchPath;
-	}
-	public void setLaunchPath(URI path){
-		this.launchPath = path;
-	}
-	
-	@XmlAttribute
+	@XmlAttribute(name = "URI")
 	public URI getserverAppDescriptorURI(){
 		return serverAppDescriptorURI;
 	}
 	
 	public void setserverAppDescriptorURI(URI descriptorURI){
 		this.serverAppDescriptorURI = descriptorURI;
+	}
+	
+	@XmlElement(name="mainJAR")
+	public URI getLaunchPath(){
+		return launchPath;
+	}
+	public void setLaunchPath(URI path){
+		this.launchPath = path;
 	}
 	
 	@XmlMixed
