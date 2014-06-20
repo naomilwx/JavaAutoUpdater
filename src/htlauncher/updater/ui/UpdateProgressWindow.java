@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -25,12 +26,21 @@ public class UpdateProgressWindow extends JFrame {
 	protected static final int DESCRIPTION_WIDTH = 300;
 	protected static final int DESCRIPTION_HEIGHT = 30;
 	
+	public void setDisplayedText(String text){
+		SwingUtilities.invokeLater(new Runnable(){
+             @Override
+             public void run() {
+            	 progressDescription.setText(text);
+             }
+     });
+	}
+	
 	public void showWindow(){
+		UpdateProgressWindow selfRef = this;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UpdateProgressWindow frame = new UpdateProgressWindow();
-					frame.setVisible(true);
+					selfRef.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,14 +59,13 @@ public class UpdateProgressWindow extends JFrame {
 	}
 	
 	private void setupMainWindow(){
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setUndecorated(true);
 		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(null);
 	}
 
 	private void setupContentPane(){
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 	}

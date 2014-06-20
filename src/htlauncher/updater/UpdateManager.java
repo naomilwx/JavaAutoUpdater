@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class UpdateManager {
+	private static final String PROGRESS_DISPLAY_TEXT_FORMAT = "Downloading component: %1s";
 	
 	private UpdateDataManager dataManager;
 	private ServerLiason server;
@@ -25,10 +26,10 @@ public class UpdateManager {
 	}
 	
 	public void setupComponents(String appPath){
-		dataManager = new UpdateDataManager(appPath);
-		server = new ServerLiason();
 		progressWindow = new UpdateProgressWindow();
 		progressWindow.showWindow();
+		dataManager = new UpdateDataManager(appPath);
+		server = new ServerLiason();
 	}
 	
 	public void runUpdate(){
@@ -57,6 +58,7 @@ public class UpdateManager {
 		double latestVer = component.getVersion();
 		double currentVer = dataManager.getDownloadedVersion(name);
 		if(latestVer > currentVer){
+			progressWindow.setDisplayedText(String.format(PROGRESS_DISPLAY_TEXT_FORMAT, component.getComponentName()));
 			//update jar for component from server
 			server.downloadFile(component.getServerURI(), component.getLocalURI());
 			//update success: update downloaded component version
