@@ -11,7 +11,7 @@ public class UpdateManager {
 	private static final String PROGRESS_DISPLAY_TEXT_FORMAT = "Downloading component: %1s";
 	
 	private UpdateDataManager dataManager;
-	private ServerLiason server;
+	private FileDownloader server;
 	private URI appInfoURI;
 	private UpdateProgressWindow progressWindow;
 	
@@ -29,7 +29,7 @@ public class UpdateManager {
 		progressWindow = new UpdateProgressWindow();
 		progressWindow.setWindowVisibility(true);
 		dataManager = new UpdateDataManager(appPath);
-		server = new ServerLiason();
+		server = new FileDownloader();
 	}
 	
 	public void runUpdate(){
