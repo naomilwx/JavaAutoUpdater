@@ -17,8 +17,8 @@ public class ServerLiason {
 		try {
 			URLConnection connection = source.toURL().openConnection();
 			buffInput = new BufferedInputStream(connection.getInputStream());
-			
-			destFile = new File(destination);
+			System.out.println(destination);
+			destFile = new File(destination.toString());
 			destFile.createNewFile();
 			buffOut = new BufferedOutputStream(new FileOutputStream(destFile));
 			byte[] buff = new byte[ServerLiason.BUFFER_SIZE];

@@ -49,16 +49,15 @@ public class UpdateDataManager {
 	
 	private void loadUpdaterData(){
 		downloadedVersions = new HashMap<String, Double>();
-//		try{
-//			if(!updaterInfoFile.exists()){
-//				updaterInfoFile.createNewFile();
-//			}else{
-//				loadUpdaterDataFromFile();
-//			}
-//		}catch(IOException e){
-//			e.printStackTrace();
-//		}
-//		
+		try{
+			if(!updaterInfoFile.exists()){
+				updaterInfoFile.createNewFile();
+			}else{
+				loadUpdaterDataFromFile();
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -127,9 +126,6 @@ public class UpdateDataManager {
 		if(appDescriptor == null){
 			loadAppData();
 		}
-		System.out.println(appDescriptor.getserverAppDescriptorURI());
-		System.out.println(((ComponentDescriptor)(appDescriptor.getComponents().get(0))).getServerURI());
-		System.out.println(((ComponentDescriptor)(appDescriptor.getComponents().get(0))).getComponentName());
 		return appDescriptor.getComponents();
 	}
 	
