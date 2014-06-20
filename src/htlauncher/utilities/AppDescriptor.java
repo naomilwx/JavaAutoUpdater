@@ -10,22 +10,33 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 @XmlRootElement(name="application")
 @XmlSeeAlso({ComponentDescriptor.class})
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AppDescriptor {
+	@XmlElement(name="mainJAR")
 	private URI launchPath;
+	
+	@XmlAttribute(name = "URI")
 	private URI serverAppDescriptorURI;
+	
+	@XmlElementWrapper(name="components")
+	@XmlElement(name="component")
 	private ArrayList<ComponentDescriptor> components;
 	
 	public String serialiseToXML(){
 		try {
-			JAXBContext context = JAXBContext.newInstance(AppDescriptor.class);
+			JAXBContext context = JAXBContext.newInstance(AppDescriptor.class, ComponentDescriptor.class);
 			Marshaller marshaller = context.createMarshaller();
 			
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -47,7 +58,7 @@ public class AppDescriptor {
 	public static AppDescriptor unserialiseFromXMLFile(File file){
 		JAXBContext context;
 		try {
-			context = JAXBContext.newInstance(AppDescriptor.class);
+			context = JAXBContext.newInstance(AppDescriptor.class, ComponentDescriptor.class);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			
 			AppDescriptor desc = (AppDescriptor)unmarshaller.unmarshal(file);
@@ -59,7 +70,6 @@ public class AppDescriptor {
 		return null;
 	}
 	
-	@XmlAttribute(name = "URI")
 	public URI getserverAppDescriptorURI(){
 		return serverAppDescriptorURI;
 	}
@@ -68,7 +78,6 @@ public class AppDescriptor {
 		this.serverAppDescriptorURI = descriptorURI;
 	}
 	
-	@XmlElement(name="mainJAR")
 	public URI getLaunchPath(){
 		return launchPath;
 	}
@@ -76,7 +85,7 @@ public class AppDescriptor {
 		this.launchPath = path;
 	}
 	
-	@XmlMixed
+	
 	public ArrayList<ComponentDescriptor> getComponents(){
 		return components;
 	}

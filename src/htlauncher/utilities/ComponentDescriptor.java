@@ -4,15 +4,17 @@ import java.net.URI;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlRootElement(name="component")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ComponentDescriptor {
 	private String name;
 	private URI localURI;
 	private URI serverURI;
 	private double version;
 	
-	@XmlElement
 	public String getComponentName(){
 		return name;
 	}
@@ -21,7 +23,6 @@ public class ComponentDescriptor {
 		this.name = name;
 	}
 	
-	@XmlElement
 	public double getVersion(){
 		return version;
 	}
@@ -30,7 +31,6 @@ public class ComponentDescriptor {
 		this.version = version;
 	}
 	
-	@XmlElement
 	public URI getLocalURI(){
 		return localURI;
 	}
@@ -39,7 +39,6 @@ public class ComponentDescriptor {
 		this.localURI = local;
 	}
 	
-	@XmlElement
 	public URI getServerURI(){
 		return serverURI;
 	}
