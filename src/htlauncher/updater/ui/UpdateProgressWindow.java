@@ -102,7 +102,7 @@ public class UpdateProgressWindow extends JFrame {
 	}
 	
 	private void setupProgressBar(){
-		progressBar = new JProgressBar();
+		progressBar = new JProgressBar(0, 100);
 		progressBar.setSize(PROGRESSBAR_WIDTH, PROGRESSBAR_HEIGHT);
 		centerComponentWithOffset(progressBar, 0, 0);
 		contentPane.add(progressBar);

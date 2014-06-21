@@ -27,7 +27,7 @@ public class UpdateDataManager {
 	private String appInfoFilepath;
 	private AppDescriptor appDescriptor;
 	
-	protected URI serverAppInfoURI;
+	private URI serverAppInfoURI;
 	
 	public UpdateDataManager(String appInfoPath){
 		this.appInfoFilepath = appInfoPath;
@@ -130,4 +130,10 @@ public class UpdateDataManager {
 		return appDescriptor.getComponents();
 	}
 	
+	protected URI getServerAppInfoURI(){
+		if(serverAppInfoURI == null){
+			loadAppData();
+		}
+		return serverAppInfoURI;
+	}
 }

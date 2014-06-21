@@ -1,7 +1,6 @@
 package htlauncher.updater;
 
 
-import htlauncher.updater.ui.UpdateProgressWindow;
 import htlauncher.utilities.ComponentDescriptor;
 
 import java.io.IOException;
@@ -42,10 +41,10 @@ public class UpdateManager {
 	}
 	
 	public void updateAppDetails(){
-		URI serverURI = dataManager.serverAppInfoURI;
+		URI serverURI = dataManager.getServerAppInfoURI();
 		if(serverURI != null && appInfoURI != null){
 			//overwrite with file from server
-			downloader.downloadFile(serverURI, appInfoURI, downloadProgress);
+			startDownload(serverURI, appInfoURI, true);
 		}
 		dataManager.loadAppData();
 	}
@@ -64,7 +63,7 @@ public class UpdateManager {
 		if(latestVer > currentVer){
 			downloadProgress.updateDownloadingComponent(component.getComponentName());
 			//update jar for component from server
-			downloader.downloadFile(component.getServerURI(), component.getLocalURI(), downloadProgress);
+			startDownload(component.getServerURI(), component.getLocalURI(), true);
 			//update success: update downloaded component version
 			dataManager.updateDownloadedVersion(name, latestVer);
 		}
@@ -74,9 +73,18 @@ public class UpdateManager {
 		return dataManager.getAppLaunchPath();
 	}
 	
+	
+	private void startDownload(URI source, URI dest, boolean showProgress){
+		DownloadProgress progress = new DownloadProgress();
+		if(showProgress){
+			downloadProgress.startProgressDisplay(progress);
+		}
+		downloader.downloadFile(source, dest, progress);
+	}
+	
 	private boolean checkServerConnection(){
 		try {
-			String serverPath = dataManager.serverAppInfoURI.getHost();
+			String serverPath = dataManager.getServerAppInfoURI().getHost();
 			URL serverURL = new URL ("http", serverPath, 80, "");
 			serverURL.openConnection().connect();
 			return true;
