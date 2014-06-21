@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<application URI="http://localhost/HubTurbo.xml">
+<application URI="https://github.com/naomilwx/JavaAutoUpdater/blob/master/HubTurbo.xml">
 	<components>
     	<component>
         	<name>test component</name>
         	<localURI>HubTurbo.jar</localURI>
-        	<serverURI>http://localhost/HubTurbo.jar</serverURI>
-        	<version>2.0</version>
+        	<serverURI>https://github.com/dariusf/HubTurbo/releases/download/v0.0.0/HubTurbo.jar</serverURI>
+        	<version>0.0</version>
     	</component>
 	</components>
     <mainJAR>HubTurbo.jar</mainJAR>

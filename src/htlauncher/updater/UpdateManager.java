@@ -42,10 +42,8 @@ public class UpdateManager {
 	
 	public void updateAppDetails(){
 		URI serverURI = dataManager.getServerAppInfoURI();
-		if(serverURI != null && appInfoURI != null){
-			//overwrite with file from server
-			startDownload(serverURI, appInfoURI, true);
-		}
+		//overwrite with file from server
+		startDownload(serverURI, appInfoURI, true);
 		dataManager.loadAppData();
 	}
 	
