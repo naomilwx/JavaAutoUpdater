@@ -11,12 +11,7 @@ import java.net.URLConnection;
 public class FileDownloader {
 	public static final int BUFFER_SIZE = 2048;
 	
-	private int totalBytesRead;
 	private int totalBytes;
-	
-	public int getTotalBytesRead(){
-		return totalBytesRead;
-	}
 	
 	public int getTotalBytes(){
 		return totalBytes;
@@ -53,7 +48,7 @@ public class FileDownloader {
 		byte[] buff = new byte[FileDownloader.BUFFER_SIZE];
 		
 		int bytesRead = 0;
-		totalBytesRead = 0;
+		int totalBytesRead = 0;
 		while((bytesRead = buffInput.read(buff)) > 0){
 			totalBytesRead += bytesRead;
 			progress.updateBytesDownloaded(totalBytesRead);
@@ -80,10 +75,10 @@ public class FileDownloader {
 	
 	
 	private void handleDownloadEnd(BufferedInputStream buffInput, BufferedOutputStream buffOut){
-		totalBytesRead = 0;
 		totalBytes = 0;
 		closeIOStreams(buffInput, buffOut);
 	}
+	
 	public void downloadFile(URI source, URI destination, DownloadProgressDisplay progress){
 		BufferedInputStream buffInput = null;
 		BufferedOutputStream buffOut = null;
