@@ -48,23 +48,36 @@ public class UpdateManager {
 	}
 	
 	public void updateAppComponents(){
+		boolean success = true;
 		for(ComponentDescriptor component: dataManager.getAppComponents()){
-			updateComponent(component);
+			success = updateComponent(component);
+			if(!success){
+				break;
+			}
 		}
-		dataManager.saveUpdaterData();
+		if(success){
+			dataManager.saveUpdaterData();
+			downloader.removeBackups();
+		}else{
+			downloader.rollBack();
+		}
 	}
 	
-	public void updateComponent(ComponentDescriptor component){
+	public boolean updateComponent(ComponentDescriptor component){
 		String name = component.getComponentName();
 		double latestVer = component.getVersion();
 		double currentVer = dataManager.getDownloadedVersion(name);
+		boolean success = true;
 		if(latestVer > currentVer){
 			downloadProgress.updateDownloadingComponent(component.getComponentName());
 			//update jar for component from server
-			startDownload(component.getServerURI(), component.getLocalURI(), true);
-			//update success: update downloaded component version
-			dataManager.updateDownloadedVersion(name, latestVer);
+			success = startDownload(component.getServerURI(), component.getLocalURI(), true);
+			if(success){
+				//update success: update downloaded component version
+				dataManager.updateDownloadedVersion(name, latestVer);
+			}
 		}
+		return success;
 	}
 	
 	public URI getAppLaunchPath(){
@@ -72,12 +85,13 @@ public class UpdateManager {
 	}
 	
 	
-	private void startDownload(URI source, URI dest, boolean showProgress){
+	private boolean startDownload(URI source, URI dest, boolean showProgress){
 		DownloadProgress progress = new DownloadProgress();
 		if(showProgress){
 			downloadProgress.startProgressDisplay(progress);
 		}
 		downloader.downloadFile(source, dest, progress);
+		return progress.getDownloadSuccess();
 	}
 	
 	private boolean checkServerConnection(){

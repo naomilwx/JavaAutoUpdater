@@ -43,7 +43,7 @@ public class UpdateDataManager {
 	protected double getDownloadedVersion(String name){
 		Double ver = downloadedVersions.get(name);
 		if(ver == null){
-			return 0;
+			return -1;
 		}
 		return ver;
 	}

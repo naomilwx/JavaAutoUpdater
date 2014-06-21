@@ -7,9 +7,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class FileDownloader {
 	public static final int BUFFER_SIZE = 2048;
+	
+	private HashMap<String, String> backups;
+	
+	public FileDownloader(){
+		backups = new HashMap<String, String>();
+	}
 	
 	private BufferedInputStream setupStreamFromSource(URI source, DownloadProgress progress){
 		BufferedInputStream buffInput = null;
@@ -30,6 +41,9 @@ public class FileDownloader {
 		BufferedOutputStream buffOut = null;
 		try {
 			File destFile = new File(destination.toString());
+			if(destFile.exists()){
+				createBackUp(destFile);
+			}
 			destFile.createNewFile();
 			buffOut = new BufferedOutputStream(new FileOutputStream(destFile));
 		} catch (IOException e) {
@@ -38,6 +52,45 @@ public class FileDownloader {
 			progress.setDownloadSuccess(false);
 		}
 		return buffOut;
+	}
+	
+	protected void rollBack(){
+		for(Entry<String, String> entry: backups.entrySet()){
+			String backupPath = entry.getValue();
+			String originalPath = entry.getKey();
+			moveFile(backupPath, originalPath);
+		}
+	}
+	
+	protected void removeBackups(){
+		for(String backupPath: backups.values()){
+			File backupFile = new File(backupPath);
+			if(backupFile.exists()){
+				backupFile.delete();
+			}
+		}
+		backups = new HashMap<String, String>();
+	}
+	
+	private void moveFile(String source, String dest){
+		try {
+			Files.move(Paths.get(source), Paths.get(dest), StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void createBackUp(File original){
+		String originalPath = original.getPath();
+		String backupPath = originalPath + getBackupSuffix();
+		moveFile(originalPath, backupPath);
+		backups.put(originalPath, backupPath);
+	}
+	
+	//Generates new sufix for backup file
+	private String getBackupSuffix(){
+		return "backup" + System.currentTimeMillis() ;
 	}
 	
 	private void download(BufferedInputStream buffInput, BufferedOutputStream buffOut, DownloadProgress progress) throws IOException{
