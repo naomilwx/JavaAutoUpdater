@@ -23,10 +23,8 @@ public class UpdateDataManager {
 	private File updaterInfoFile;
 	private File appInfoFile;
 	private HashMap<String, Double> downloadedVersions;
-	
 	private String appInfoFilepath;
 	private AppDescriptor appDescriptor;
-	
 	private URI serverAppInfoURI;
 	
 	public UpdateDataManager(String appInfoPath){
@@ -66,7 +64,9 @@ public class UpdateDataManager {
 		try {
 			BufferedReader fileReader = new BufferedReader(new FileReader(updaterInfoFile));
 			String storedPath = fileReader.readLine();
-			serverAppInfoURI = new URI(storedPath);
+			if(storedPath != null){
+				serverAppInfoURI = new URI(storedPath);
+			}
 			
 			String line;
 			while((line = fileReader.readLine()) != null){
