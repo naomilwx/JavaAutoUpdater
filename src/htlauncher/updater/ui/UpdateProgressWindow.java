@@ -1,7 +1,5 @@
 package htlauncher.updater.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.lang.ref.WeakReference;
@@ -12,10 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
 public class UpdateProgressWindow extends JFrame {
+
+	private static final long serialVersionUID = 7695164016513402916L;
 
 	private JPanel contentPane;
 	private JProgressBar progressBar;
@@ -50,23 +48,21 @@ public class UpdateProgressWindow extends JFrame {
 		});
 	}
 	
-	public void setProgressBarMax(int max){
-		SwingUtilities.invokeLater(new Runnable(){
-            @Override
-            public void run() {
-            	progressBar.setMaximum(max);
-            }
-		});
-	}
-	
 	public void setProgress(int progress){
-		//TODO: in order for progress bar update to be seen use invokeandwait
-		SwingUtilities.invokeLater(new Runnable(){
-            @Override
-            public void run() {
-            	progressBar.setValue(progress);
-            }
-		});
+		try {
+			SwingUtilities.invokeAndWait(new Runnable(){
+			    @Override
+			    public void run() {
+			    	progressBar.setValue(progress);
+			    }
+			});
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -118,7 +114,6 @@ public class UpdateProgressWindow extends JFrame {
 		progressDescription = new JLabel();
 		progressDescription.setSize(DESCRIPTION_WIDTH, DESCRIPTION_HEIGHT);
 		centerComponentWithOffset(progressDescription, 0, DESCRIPTION_HEIGHT);
-		progressDescription.setText("test");
 		contentPane.add(progressDescription);
 	}
 

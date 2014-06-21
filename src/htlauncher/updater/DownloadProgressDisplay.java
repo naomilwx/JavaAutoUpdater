@@ -30,30 +30,33 @@ public class DownloadProgressDisplay {
 		progressWindow.setDisplayedText(String.format(PROGRESS_DISPLAY_TEXT_FORMAT, component));
 	}
 	
-	public void startProgressDisplay(DownloadProgress progress){
+	protected void startProgressDisplay(DownloadProgress progress){
 		this.progress = progress;
 		startDisplayUpdate();
 	}
 	
 	private void startDisplayUpdate(){
 		if(updateTimer != null){
-			stopDisplayUpdate();
+			stopProgressDisplay();
 		}
 		updateTimer = new Timer();
 		TimerTask updateTask = new TimerTask(){
 			@Override
 			public void run(){
-				progressWindow.setProgress((int)progress.getDownloadedPercent());
-				if(progress.getDownloadCompleted()){
-					stopDisplayUpdate();
+				int progressPercent = (int) Math.round(progress.getDownloadedPercent());
+				progressWindow.setProgress(progressPercent);
+				if(progressPercent == 100){
+					stopProgressDisplay();
 				}
 			}
 		};
 		updateTimer.scheduleAtFixedRate(updateTask, 0, UPDATE_PERIOD);
 	}
-	
-	private void stopDisplayUpdate(){
-		updateTimer.cancel();
-		updateTimer = null;
+
+	protected void stopProgressDisplay(){
+		if(updateTimer != null){
+			updateTimer.cancel();
+			updateTimer = null;
+		}
 	}
 }

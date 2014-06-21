@@ -8,11 +8,11 @@ public class AppLauncher {
 	public static final String APP_INFO_FILEPATH = "HubTurbo.xml";
 	
 	private UpdateManager updater;
-	private Process appProcess;
 	
 	public static void main(String[] args) {
 		AppLauncher launcher = new AppLauncher();
 		launcher.run();
+		System.exit(0);
 	}
 	
 	public AppLauncher(){
@@ -32,7 +32,7 @@ public class AppLauncher {
 		URI launchPath = updater.getAppLaunchPath();
 		String command = "java -jar " + launchPath.toString(); 
 		try {
-			appProcess = Runtime.getRuntime().exec(command);
+			Runtime.getRuntime().exec(command);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
