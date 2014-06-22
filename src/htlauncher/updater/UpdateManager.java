@@ -105,7 +105,7 @@ public class UpdateManager {
 			return true;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
-			Utilities.showErrorDialog("Cache Corrupted", "The application launcher's cache has been corrupted! Please delete "+ UpdateDataManager.UPDATER_INFO_FILEPATH);
+			Utilities.showError("Cache Corrupted", "The application launcher's cache has been corrupted! Please delete "+ UpdateDataManager.UPDATER_INFO_FILEPATH);
 			return false;
 		} catch (IOException e) {
 			return false;

@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Utilities {
-	public static void showErrorDialog(String title, String message){
+	public static void showError(String title, String message){
 		showDialogWindow(title, message, JOptionPane.ERROR_MESSAGE);
 	}
 	
@@ -25,7 +25,7 @@ public class Utilities {
 	}
 	
 	public static void showFatalErrorDialog(Exception e){
-		Utilities.showErrorDialog("Fatal Error", "A fatal error has occured. "
+		Utilities.showError("Fatal Error", "A fatal error has occured. "
 				+ e.getMessage()
 				+ "Please contact the developers or check that a fix for the error is available");
 	}

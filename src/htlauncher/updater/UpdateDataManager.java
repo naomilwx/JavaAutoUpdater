@@ -2,6 +2,7 @@ package htlauncher.updater;
 
 import htlauncher.utilities.AppDescriptor;
 import htlauncher.utilities.ComponentDescriptor;
+import htlauncher.utilities.Utilities;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,7 +23,7 @@ public class UpdateDataManager {
 	
 	private File updaterInfoFile;
 	private File appInfoFile;
-	private HashMap<String, Double> downloadedVersions;
+	private HashMap<String, Double> downloadedVersions = new HashMap<String, Double>();
 	private String appInfoFilepath;
 	private AppDescriptor appDescriptor;
 	private URI serverAppInfoURI;
@@ -47,7 +48,6 @@ public class UpdateDataManager {
 	}
 	
 	private void loadUpdaterData(){
-		downloadedVersions = new HashMap<String, Double>();
 		try{
 			if(!updaterInfoFile.exists()){
 				updaterInfoFile.createNewFile();
@@ -56,6 +56,8 @@ public class UpdateDataManager {
 			}
 		}catch(IOException e){
 			e.printStackTrace();
+			Utilities.showWarning("Launcher cache file creation failed", 
+					"Cannot create or open application launcher cache file. Check directory permissions");
 		}
 	}
 	
@@ -79,11 +81,10 @@ public class UpdateDataManager {
 			}
 			fileReader.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Utilities.showWarning("Launcher cache read failed.", "Cannot read application launcher data. Check directory permissions.");
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
@@ -105,8 +106,9 @@ public class UpdateDataManager {
 			fileWriter.flush();
 			fileWriter.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Utilities.showWarning("Launcher data save failed",
+					"Cannot save application launcher data to disk. Check directory permissions.");
 		}
 	}
 	
