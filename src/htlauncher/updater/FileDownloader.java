@@ -3,10 +3,14 @@ package htlauncher.updater;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -24,37 +28,25 @@ public class FileDownloader {
 		backups = new HashMap<String, String>();
 	}
 	
-	private BufferedInputStream setupStreamFromSource(URI source, DownloadProgress progress){
+	private BufferedInputStream setupStreamFromSource(URI source, DownloadProgress progress) throws MalformedURLException, IOException{
 		BufferedInputStream buffInput = null;
-		URLConnection connection;
-		try {
-			connection = source.toURL().openConnection();
-			connection.setConnectTimeout(CONNECTION_TIMEOUT);
-			connection.setReadTimeout(READ_CONNECTION_TIMEOUT);
-			progress.setTotalDownloadBytes(connection.getContentLengthLong());
-			buffInput = new BufferedInputStream(connection.getInputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			progress.setDownloadSuccess(false);
-		}
+		URLConnection connection = source.toURL().openConnection();
+		connection.setConnectTimeout(CONNECTION_TIMEOUT);
+		connection.setReadTimeout(READ_CONNECTION_TIMEOUT);
+		progress.setTotalDownloadBytes(connection.getContentLengthLong());
+		buffInput = new BufferedInputStream(connection.getInputStream());
+		
 		return buffInput;
 	}
 	
-	private BufferedOutputStream setupStreamToDestination(URI destination, DownloadProgress progress){
-		BufferedOutputStream buffOut = null;
-		try {
-			File destFile = new File(destination.toString());
-			if(destFile.exists()){
-				createBackUp(destFile);
-			}
-			destFile.createNewFile();
-			buffOut = new BufferedOutputStream(new FileOutputStream(destFile));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			progress.setDownloadSuccess(false);
+	private BufferedOutputStream setupStreamToDestination(URI destination, DownloadProgress progress) throws IOException{
+		File destFile = new File(destination.toString());
+		if(destFile.exists()){
+			createBackUp(destFile);
 		}
+		destFile.createNewFile();
+		BufferedOutputStream buffOut = new BufferedOutputStream(new FileOutputStream(destFile));
+		
 		return buffOut;
 	}
 	
@@ -136,6 +128,12 @@ public class FileDownloader {
 			
 			download(buffInput, buffOut, progress);
 			progress.setDownloadCompleted(true);
+		} catch(UnknownHostException e){
+			e.printStackTrace();
+			progress.setDownloadSuccess(false);
+		} catch(SocketTimeoutException e){
+			e.printStackTrace();
+			progress.setDownloadSuccess(false);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
