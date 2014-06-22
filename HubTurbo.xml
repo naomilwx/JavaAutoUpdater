@@ -2,7 +2,7 @@
 <application URI="https://raw.githubusercontent.com/naomilwx/JavaAutoUpdater/master/HubTurbo.xml">
 	<components>
     	<component>
-        	<name>test component</name>
+        	<name>HubTurbo</name>
         	<localURI>HubTurbo.jar</localURI>
         	<serverURI>https://github.com/dariusf/HubTurbo/releases/download/v0.0.0/HubTurbo.jar</serverURI>
         	<version>0.0</version>
