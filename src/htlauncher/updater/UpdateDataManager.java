@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class UpdateDataManager {
-	private static final String UPDATER_INFO_FILEPATH = "updater_data";
+	protected static final String UPDATER_INFO_FILEPATH = "updater_data";
 	private static final String SPLIT_MARKER = "<-sp->";
 	
 	private File updaterInfoFile;
@@ -85,7 +85,6 @@ public class UpdateDataManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

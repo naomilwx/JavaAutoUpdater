@@ -3,7 +3,6 @@ package htlauncher.updater;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -135,7 +134,6 @@ public class FileDownloader {
 			e.printStackTrace();
 			progress.setDownloadSuccess(false);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			progress.setDownloadSuccess(false);
 		} finally{

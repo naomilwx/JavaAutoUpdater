@@ -2,6 +2,7 @@ package htlauncher.updater;
 
 
 import htlauncher.utilities.ComponentDescriptor;
+import htlauncher.utilities.Utilities;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -15,14 +16,9 @@ public class UpdateManager {
 	private URI appInfoURI;
 	private DownloadProgressDisplay downloadProgress;
 	
-	public UpdateManager(String appInfoPath){
-		try {
-			setupComponents(appInfoPath);
-			this.appInfoURI = new URI(appInfoPath);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public UpdateManager(String appInfoPath) throws URISyntaxException{
+		setupComponents(appInfoPath);
+		this.appInfoURI = new URI(appInfoPath);
 	}
 	
 	public void setupComponents(String appPath){
@@ -101,16 +97,17 @@ public class UpdateManager {
 	private boolean checkServerConnection(){
 		try {
 			String serverPath = dataManager.getServerAppInfoURI().getHost();
+			if(serverPath == null){
+				throw new MalformedURLException();
+			}
 			URL serverURL = new URL ("http", serverPath, 80, "");
 			serverURL.openConnection().connect();
 			return true;
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Utilities.showErrorDialog("Cache Corrupted", "The application launcher's cache has been corrupted! Please delete "+ UpdateDataManager.UPDATER_INFO_FILEPATH);
 			return false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return false;
 		}
 		

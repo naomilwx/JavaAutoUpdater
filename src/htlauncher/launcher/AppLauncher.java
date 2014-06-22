@@ -2,7 +2,10 @@ package htlauncher.launcher;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
+
 import htlauncher.updater.UpdateManager;
+import htlauncher.utilities.Utilities;
 
 public class AppLauncher {
 	public static final String APP_INFO_FILEPATH = "HubTurbo.xml";
@@ -16,7 +19,14 @@ public class AppLauncher {
 	}
 	
 	public AppLauncher(){
-		updater = new UpdateManager(AppLauncher.APP_INFO_FILEPATH);
+		try {
+			updater = new UpdateManager(AppLauncher.APP_INFO_FILEPATH);
+		} catch (URISyntaxException e) {
+			//Should not happen. Means APP_INFO_FILEPATH is set wrongly
+			e.printStackTrace();
+			Utilities.showFatalErrorDialog(e);
+			System.exit(-1);
+		}
 	}
 	
 	public void run(){
@@ -34,8 +44,9 @@ public class AppLauncher {
 		try {
 			Runtime.getRuntime().exec(command);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Utilities.showFatalErrorDialog(e);
+			System.exit(-1);
 		}
 	}
 	
