@@ -43,8 +43,12 @@ public class UpdateManager {
 	public void updateAppDetails(){
 		URI serverURI = dataManager.getServerAppInfoURI();
 		//overwrite with file from server
-		startDownload(serverURI, appInfoURI, true);
-		dataManager.loadAppData();
+		boolean success = startDownload(serverURI, appInfoURI, true);
+		if(success){
+			dataManager.loadAppData();
+		}else{
+			downloader.rollBack();
+		}
 	}
 	
 	public void updateAppComponents(){
