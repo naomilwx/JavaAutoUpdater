@@ -27,7 +27,7 @@ public class FileDownloader {
 		URLConnection connection;
 		try {
 			connection = source.toURL().openConnection();
-			progress.setTotalDownloadBytes(connection.getContentLength());
+			progress.setTotalDownloadBytes(connection.getContentLengthLong());
 			buffInput = new BufferedInputStream(connection.getInputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
