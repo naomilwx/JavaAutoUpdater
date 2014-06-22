@@ -44,6 +44,9 @@ public class DownloadProgress {
 	}
 	
 	public double getDownloadedPercent(){
+		if(totalDownloadBytes == 0){
+			return 0;
+		}
 		return 100.0 * bytesDownloaded /totalDownloadBytes;
 	}
 }

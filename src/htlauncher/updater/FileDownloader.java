@@ -15,6 +15,8 @@ import java.util.Map.Entry;
 
 public class FileDownloader {
 	public static final int BUFFER_SIZE = 2048;
+	public static final int CONNECTION_TIMEOUT = 15000;
+	public static final int READ_CONNECTION_TIMEOUT = 30000;
 	
 	private HashMap<String, String> backups;
 	
@@ -27,6 +29,8 @@ public class FileDownloader {
 		URLConnection connection;
 		try {
 			connection = source.toURL().openConnection();
+			connection.setConnectTimeout(CONNECTION_TIMEOUT);
+			connection.setReadTimeout(READ_CONNECTION_TIMEOUT);
 			progress.setTotalDownloadBytes(connection.getContentLengthLong());
 			buffInput = new BufferedInputStream(connection.getInputStream());
 		} catch (IOException e) {
@@ -100,6 +104,7 @@ public class FileDownloader {
 		int totalBytesRead = 0;
 		while((bytesRead = buffInput.read(buff)) > 0){
 			totalBytesRead += bytesRead;
+			
 			progress.setBytesDownloaded(totalBytesRead);
 			buffOut.write(buff, 0, bytesRead);
 		}
