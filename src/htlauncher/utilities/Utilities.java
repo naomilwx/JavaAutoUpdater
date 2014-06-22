@@ -5,11 +5,23 @@ import javax.swing.JOptionPane;
 
 public class Utilities {
 	public static void showErrorDialog(String title, String message){
+		showDialogWindow(title, message, JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public static void showWarning(String title, String message){
+		showDialogWindow(title, message, JOptionPane.WARNING_MESSAGE);
+	}
+	
+	public static void showMessage(String title, String message){
+		showDialogWindow(title, message, JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	private static void showDialogWindow(String title, String message, int dialogType){
 		JFrame frame = new JFrame();
 		JOptionPane.showMessageDialog(frame,
 			    message,
 			    title,
-			    JOptionPane.ERROR_MESSAGE);
+			    dialogType);
 	}
 	
 	public static void showFatalErrorDialog(Exception e){
