@@ -47,7 +47,10 @@ public class DownloadedFeaturesDisplay {
 	private void loadFeatureVersionFromFile(){
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(featureStore));
-			lastDisplayedVersion = Double.parseDouble(reader.readLine());
+			String info = reader.readLine();
+			if(reader.readLine() != null){
+				lastDisplayedVersion = Double.parseDouble(info);
+			}
 			reader.close();
 			
 		} catch (FileNotFoundException e) {

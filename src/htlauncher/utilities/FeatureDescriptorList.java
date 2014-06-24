@@ -7,12 +7,16 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+
 @XmlRootElement(name="features")
 @XmlSeeAlso({FeatureDescriptor.class})
+@XmlAccessorType(XmlAccessType.FIELD)
 public class FeatureDescriptorList {
 	@XmlElement(name="feature")
 	private ArrayList<FeatureDescriptor> features;
@@ -30,7 +34,7 @@ public class FeatureDescriptorList {
 		try {
 			JAXBContext context = JAXBContext.newInstance(FeatureDescriptorList.class);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
-			
+			System.out.println(uri);
 			list = (FeatureDescriptorList)unmarshaller.unmarshal(uri.toURL());
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
