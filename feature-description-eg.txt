@@ -1,2 +1,2 @@
-<b>test</b>
+test
 connect to github
