@@ -42,6 +42,8 @@ public class FeatureDescriptorList {
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e){
+			e.printStackTrace();
 		}
 		return list;
 	}
