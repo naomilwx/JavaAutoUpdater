@@ -34,7 +34,7 @@ public class AppDescriptor {
 	
 	public String serialiseToXML(){
 		try {
-			JAXBContext context = JAXBContext.newInstance(AppDescriptor.class, ComponentDescriptor.class);
+			JAXBContext context = JAXBContext.newInstance(AppDescriptor.class);
 			Marshaller marshaller = context.createMarshaller();
 			
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -56,7 +56,7 @@ public class AppDescriptor {
 	public static AppDescriptor unserialiseFromXMLFile(File file){
 		JAXBContext context;
 		try {
-			context = JAXBContext.newInstance(AppDescriptor.class, ComponentDescriptor.class);
+			context = JAXBContext.newInstance(AppDescriptor.class);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			
 			AppDescriptor desc = (AppDescriptor)unmarshaller.unmarshal(file);
