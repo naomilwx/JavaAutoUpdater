@@ -137,4 +137,5 @@ public class UpdateDataManager {
 		}
 		return serverAppInfoURI;
 	}
+	
 }

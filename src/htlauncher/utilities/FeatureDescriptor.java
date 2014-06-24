@@ -20,6 +20,10 @@ public class FeatureDescriptor {
 		this.version = ver;
 	}
 	
+	public URI getPathToDescriptor(){
+		return pathToDescriptor;
+	}
+	
 	public void setPathToDescriptor(URI path){
 		this.pathToDescriptor = path;
 	}

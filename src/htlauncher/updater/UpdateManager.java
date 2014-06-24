@@ -47,7 +47,7 @@ public class UpdateManager {
 		}
 	}
 	
-	public void updateAppComponents(){
+	public boolean updateAppComponents(){
 		boolean success = true;
 		for(ComponentDescriptor component: dataManager.getAppComponents()){
 			success = updateComponent(component);
@@ -61,6 +61,7 @@ public class UpdateManager {
 		}else{
 			downloader.rollBack();
 		}
+		return success;
 	}
 	
 	public boolean updateComponent(ComponentDescriptor component){

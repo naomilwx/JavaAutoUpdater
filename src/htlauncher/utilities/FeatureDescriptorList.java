@@ -25,7 +25,7 @@ public class FeatureDescriptorList {
 		this.features = features;
 	}
 	
-	public FeatureDescriptorList unserialiseFromURI(URI uri){
+	public static FeatureDescriptorList unserialiseFromURI(URI uri){
 		FeatureDescriptorList list = null;
 		try {
 			JAXBContext context = JAXBContext.newInstance(FeatureDescriptorList.class);
@@ -40,5 +40,13 @@ public class FeatureDescriptorList {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	public static ArrayList<FeatureDescriptor> getDescriptorListFromURI(URI uri){
+		FeatureDescriptorList list = FeatureDescriptorList.unserialiseFromURI(uri);
+		if(list != null){
+			return list.getFeatures();
+		}
+		return null;
 	}
 }

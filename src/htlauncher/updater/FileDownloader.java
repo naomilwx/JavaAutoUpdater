@@ -21,8 +21,8 @@ import java.util.Map.Entry;
 
 public class FileDownloader {
 	public static final int BUFFER_SIZE = 2048;
-	public static final int CONNECTION_TIMEOUT = 15000;
-	public static final int READ_CONNECTION_TIMEOUT = 30000;
+	public static final int CONNECTION_TIMEOUT = 10000;
+	public static final int READ_CONNECTION_TIMEOUT = 15000;
 
 	private HashMap<String, String> backups;
 
