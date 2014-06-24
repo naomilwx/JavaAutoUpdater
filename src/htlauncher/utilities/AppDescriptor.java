@@ -25,8 +25,11 @@ public class AppDescriptor {
 	@XmlElement(name="mainJAR")
 	private URI launchPath;
 	
-	@XmlAttribute(name = "URI")
+	@XmlAttribute(name="URI")
 	private URI serverAppDescriptorURI;
+	
+	@XmlElement(name="features")
+	private URI featuresURI;
 	
 	@XmlElementWrapper(name="components")
 	@XmlElement(name="component")
@@ -91,4 +94,10 @@ public class AppDescriptor {
 		this.components = components;
 	}
 	
+	public URI getFeaturesURI(){
+		return featuresURI;
+	}
+	public void setFeaturesURI(URI uri){
+		this.featuresURI = uri;
+	}
 }
