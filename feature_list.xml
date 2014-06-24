@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features>
-	<feature version="0.0" URI="https://raw.githubusercontent.com/naomilwx/JavaAutoUpdater/feature-display/feature-description-eg.txt"></feature>
+	<feature version="0.0" URI="https://raw.githubusercontent.com/naomilwx/JavaAutoUpdater/feature-display/feature-description-eg.txt">
+	</feature>
 </features>
