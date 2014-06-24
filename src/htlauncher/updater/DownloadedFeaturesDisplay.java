@@ -2,6 +2,7 @@ package htlauncher.updater;
 
 import htlauncher.utilities.FeatureDescriptor;
 import htlauncher.utilities.FeatureDescriptorList;
+import htlauncher.utilities.Utilities;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -65,7 +66,7 @@ public class DownloadedFeaturesDisplay {
 	protected void displayDownloadedFeatures(){
 		ArrayList<FeatureDescriptor> features = getNewFeatureDescriptors();
 		StringBuffer featureContents = getFeatureDescriptionDisplay(features);
-		
+		Utilities.showMessage("What's new", featureContents.toString());
 		updateStoredVersionData();
 	}
 	
@@ -84,6 +85,7 @@ public class DownloadedFeaturesDisplay {
 	
 	private StringBuffer getFeatureDescriptionDisplay(ArrayList<FeatureDescriptor> list){
 		StringBuffer contents = new StringBuffer();
+		contents.append("<html>");
 		for(FeatureDescriptor feature : list){
 			double version = feature.getVersion();
 			if(version > lastDisplayedVersion){
@@ -94,6 +96,7 @@ public class DownloadedFeaturesDisplay {
 			contents.append(getFeatureDescription(feature.getPathToDescriptor()));
 			contents.append("\n");
 		}
+		contents.append("</html>");
 		return contents;
 	}
 	

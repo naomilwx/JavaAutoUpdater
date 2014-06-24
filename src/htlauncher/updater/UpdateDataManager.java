@@ -25,8 +25,8 @@ public class UpdateDataManager {
 	private File appInfoFile;
 	private HashMap<String, Double> downloadedVersions = new HashMap<String, Double>();
 	private String appInfoFilepath;
-	private AppDescriptor appDescriptor;
 	private URI serverAppInfoURI;
+	private AppDescriptor appDescriptor;
 	
 	public UpdateDataManager(String appInfoPath){
 		this.appInfoFilepath = appInfoPath;
@@ -136,6 +136,10 @@ public class UpdateDataManager {
 			loadAppData();
 		}
 		return serverAppInfoURI;
+	}
+	
+	protected AppDescriptor getAppDescriptor(){
+		return appDescriptor;
 	}
 	
 }

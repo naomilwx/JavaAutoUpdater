@@ -31,9 +31,18 @@ public class UpdateManager {
 		if(checkServerConnection()){
 			downloadProgress.showProgressWindow();
 			updateAppDetails();
-			updateAppComponents();
+			boolean success = updateAppComponents();
 			downloadProgress.hideProgressWindow();
+			if(success){
+				displayDownloadedFeatures();
+			}
 		}
+	}
+	
+	private void displayDownloadedFeatures(){
+		DownloadedFeaturesDisplay disp = new DownloadedFeaturesDisplay(dataManager.getAppDescriptor().getFeaturesURI());
+		disp.displayDownloadedFeatures();
+		
 	}
 	
 	public void updateAppDetails(){
