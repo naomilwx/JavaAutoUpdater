@@ -9,5 +9,5 @@
     	</component>
 	</components>
     <mainJAR>HubTurbo.jar</mainJAR>
-    <features>https://raw.githubusercontent.com/naomilwx/JavaAutoUpdater/feature-display</features>
+    <features>https://raw.githubusercontent.com/naomilwx/JavaAutoUpdater/feature-display/feature_list.xml</features>
 </application>
