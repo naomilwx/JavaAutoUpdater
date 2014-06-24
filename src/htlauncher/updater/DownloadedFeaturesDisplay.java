@@ -48,7 +48,7 @@ public class DownloadedFeaturesDisplay {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(featureStore));
 			String info = reader.readLine();
-			if(reader.readLine() != null){
+			if(info != null){
 				lastDisplayedVersion = Double.parseDouble(info);
 			}
 			reader.close();
@@ -69,7 +69,10 @@ public class DownloadedFeaturesDisplay {
 	protected void displayDownloadedFeatures(){
 		ArrayList<FeatureDescriptor> features = getNewFeatureDescriptors();
 		StringBuffer featureContents = getFeatureDescriptionDisplay(features);
-		Utilities.showMessage("What's new", featureContents.toString());
+		String display = featureContents.toString();
+		if(display.length() > 0){
+			Utilities.showMessage("What's new", featureContents.toString());
+		}
 		updateStoredVersionData();
 	}
 	
@@ -78,6 +81,7 @@ public class DownloadedFeaturesDisplay {
 		Predicate<FeatureDescriptor> cond = new Predicate<FeatureDescriptor>(){
 			@Override
 			public boolean test(FeatureDescriptor t) {
+				System.out.println(lastDisplayedVersion);
 				return t.getVersion() <= lastDisplayedVersion;
 			}
   
@@ -88,7 +92,7 @@ public class DownloadedFeaturesDisplay {
 	
 	private StringBuffer getFeatureDescriptionDisplay(ArrayList<FeatureDescriptor> list){
 		StringBuffer contents = new StringBuffer();
-		contents.append("<html>");
+		
 		for(FeatureDescriptor feature : list){
 			double version = feature.getVersion();
 			if(version > lastDisplayedVersion){
@@ -99,7 +103,7 @@ public class DownloadedFeaturesDisplay {
 			contents.append(getFeatureDescription(feature.getPathToDescriptor()));
 			contents.append("\n");
 		}
-		contents.append("</html>");
+		
 		return contents;
 	}
 	
