@@ -21,6 +21,17 @@ import java.util.function.Predicate;
 public class DownloadedFeaturesDisplay {
 	protected static final String FEATURE_INFO_FILEPATH = "feature_ver_data";
 	public static final int READ_CONNECTION_TIMEOUT = 15000;
+
+	private static final String HTML_STYLE = 
+			"<head><style type = \"text/css\">"
+			+ "ul {margin: 5px; padding: 10px;}"
+			+ "</style></head>";
+	private static final String CONTENTS_HTML_FORMAT = 
+			"<html>"
+			+ HTML_STYLE + 
+			"%1s</html>";
+	private static final String VERSION_NUMBER_FORMAT = 
+			"<p style = \"font-size: 14px\">Version : %1.1f</p>";
 	
 	private double lastDisplayedVersion = -1;
 	private File featureStore;
@@ -71,7 +82,7 @@ public class DownloadedFeaturesDisplay {
 		StringBuffer featureContents = getFeatureDescriptionDisplay(features);
 		String display = featureContents.toString();
 		if(display.length() > 0){
-			Utilities.showMessage("What's new", featureContents.toString());
+			Utilities.showMessage("What's new", String.format(CONTENTS_HTML_FORMAT, display));
 		}
 		updateStoredVersionData();
 	}
@@ -81,7 +92,6 @@ public class DownloadedFeaturesDisplay {
 		Predicate<FeatureDescriptor> cond = new Predicate<FeatureDescriptor>(){
 			@Override
 			public boolean test(FeatureDescriptor t) {
-				System.out.println(lastDisplayedVersion);
 				return t.getVersion() <= lastDisplayedVersion;
 			}
   
@@ -98,10 +108,8 @@ public class DownloadedFeaturesDisplay {
 			if(version > lastDisplayedVersion){
 				lastDisplayedVersion = version;
 			}
-			contents.append("Version :"+ version);
-			contents.append("\n");
+			contents.append(String.format(VERSION_NUMBER_FORMAT, version));
 			contents.append(getFeatureDescription(feature.getPathToDescriptor()));
-			contents.append("\n");
 		}
 		
 		return contents;
@@ -113,12 +121,12 @@ public class DownloadedFeaturesDisplay {
 			URLConnection connection = featureURI.toURL().openConnection();
 			connection.setReadTimeout(READ_CONNECTION_TIMEOUT);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			
+			contents.append("<ul>");
 			String line;
 			while((line = reader.readLine()) != null){
-				contents.append(line);
-				contents.append("\n");
+				contents.append("<li>" + line + "</li>");
 			}
+			contents.append("</ul>");
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
