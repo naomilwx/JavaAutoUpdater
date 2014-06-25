@@ -24,7 +24,7 @@ public class DownloadedFeaturesDisplay {
 
 	private static final String HTML_STYLE = 
 			"<head><style type = \"text/css\">"
-			+ "ul {margin: 5px; padding: 10px;}"
+			+ "ul {margin: 10px; padding: 0px;}"
 			+ "</style></head>";
 	private static final String CONTENTS_HTML_FORMAT = 
 			"<html>"
