@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class UpdateDataManager {
+	protected static final String DEFAULT_XML_PATH = "https://raw.githubusercontent.com/naomilwx/JavaAutoUpdater/master/HubTurbo.xml";
 	protected static final String UPDATER_INFO_FILEPATH = "updater_data";
 	private static final String SPLIT_MARKER = "<-sp->";
 	
@@ -133,7 +134,11 @@ public class UpdateDataManager {
 	
 	protected URI getServerAppInfoURI(){
 		if(serverAppInfoURI == null){
-			loadAppData();
+			try {
+				serverAppInfoURI = new URI(DEFAULT_XML_PATH);
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
 		}
 		return serverAppInfoURI;
 	}
