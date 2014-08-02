@@ -27,13 +27,22 @@ public class UpdateManager {
 		downloader = new FileDownloader();
 	}
 	
-	public void runUpdate(){
+	public void runUpdate(boolean firstRun){
 		if(checkServerConnection()){
-			downloadProgress.showProgressWindow();
-			updateAppDetails();
-			updateAppComponents();
-			downloadProgress.hideProgressWindow();
+			if(firstRun){
+				downloadProgress.showProgressWindow();
+			}
+			runRequiredUpdate();
+			if(firstRun){
+				downloadProgress.hideProgressWindow();
+				dataManager.moveLastDownload();
+			}
 		}
+	}
+	
+	private void runRequiredUpdate(){
+		updateAppDetails();
+		updateAppComponents();
 	}
 	
 	public void updateAppDetails(){
@@ -71,7 +80,15 @@ public class UpdateManager {
 		if(latestVer > currentVer){
 			downloadProgress.updateDownloadingComponent(component.getComponentName());
 			//update jar for component from server
-			success = startDownload(component.getServerURI(), component.getLocalURI(), true);
+			String compath = UpdateDataManager.UPDATE_FOLDER + component.getLocalURI().toString();
+			URI dlURI;
+			try {
+				dlURI = new URI(compath);
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+				return false;
+			}
+			success = startDownload(component.getServerURI(), dlURI, true);
 			if(success){
 				//update success: update downloaded component version
 				dataManager.updateDownloadedVersion(name, latestVer);
@@ -80,7 +97,7 @@ public class UpdateManager {
 		return success;
 	}
 	
-	public URI getAppLaunchPath(){
+	public String getAppLaunchPath(){
 		return dataManager.getAppLaunchPath();
 	}
 	

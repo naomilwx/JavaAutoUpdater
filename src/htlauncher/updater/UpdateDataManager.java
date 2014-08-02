@@ -39,19 +39,27 @@ public class UpdateDataManager {
 		updaterInfoFile = new File(UPDATER_INFO_FILEPATH);
 		appInfoFile = new File(appInfoFilepath);
 		moveLastDownload();
+		createDownloadDirectory();
 		loadUpdaterData();
 	}
 	
 	protected void moveLastDownload(){
 		try {
 			File downloadDir = new File(UPDATE_FOLDER);
-			if(downloadDir.exists()){
+			if(downloadDir.exists() && downloadDir.list().length > 0){
 				moveAndReplaceFolder(UPDATE_FOLDER, LAUNCH_FOLDER);
 			}
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	private void createDownloadDirectory(){
+		File downloadDir = new File(UPDATE_FOLDER);
+		if(!downloadDir.exists()){
+			downloadDir.mkdir();
 		}
 	}
 	
@@ -158,11 +166,12 @@ public class UpdateDataManager {
 		}
 	}
 	
-	protected URI getAppLaunchPath(){
+	protected String getAppLaunchPath(){
 		if(appDescriptor == null){
 			loadAppData();
 		}
-		return appDescriptor.getLaunchPath();
+		String path = LAUNCH_FOLDER + appDescriptor.getLaunchPath().toString();
+		return path;
 	}
 	
 	protected void loadAppData(){

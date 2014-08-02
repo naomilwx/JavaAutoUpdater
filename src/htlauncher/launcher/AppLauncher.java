@@ -1,5 +1,6 @@
 package htlauncher.launcher;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,17 +31,29 @@ public class AppLauncher {
 	}
 	
 	public void run(){
-		runUpdater();
-		launchApp();
+		boolean running = launchAppIfPathExists();
+		runUpdater(!running);
+		if(!running){
+			launchAppIfPathExists();
+		}
 	}
 	
-	public void runUpdater(){
-		updater.runUpdate();
+	public void runUpdater(boolean firstRun){
+		updater.runUpdate(firstRun);
 	}
 	
-	public void launchApp(){
-		URI launchPath = updater.getAppLaunchPath();
-		String command = "java -jar " + launchPath.toString(); 
+	public boolean launchAppIfPathExists(){
+		String launchPath = updater.getAppLaunchPath();
+		File path = new File(launchPath);
+		if(path.exists()){
+			launchApp(launchPath);
+			return true;
+		}else{
+			return false;
+		}
+	}
+	private void launchApp(String launchPath){
+		String command = "java -jar " + launchPath; 
 		try {
 			Runtime.getRuntime().exec(command);
 		} catch (IOException e) {
