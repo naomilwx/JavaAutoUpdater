@@ -1,7 +1,7 @@
 The program automatically downloads the required jars given the configuration file. The path of the configuration file is set in APP_INFO_FILEPATH in AppLauncher.java
 Format of configuration file:
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<application URI=path-of-xml-file-on-server>
+<application URI=path-of-xml-file-on-server appName="application name">
 	<mainJAR>path to main jar</MainJar>
 	<components>
 		<component>
