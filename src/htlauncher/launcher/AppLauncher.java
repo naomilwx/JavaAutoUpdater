@@ -1,12 +1,11 @@
 package htlauncher.launcher;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import htlauncher.updater.UpdateManager;
 import htlauncher.utilities.Utilities;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class AppLauncher {
 	public static final String APP_INFO_FILEPATH = "HubTurbo.xml";
