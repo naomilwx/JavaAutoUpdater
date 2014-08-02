@@ -4,8 +4,8 @@
     	<component>
         	<name>HubTurbo</name>
         	<localURI>HubTurbo.jar</localURI>
-        	<serverURI>https://github.com/HubTurbo/HubTurbo/releases/download/v0.5/HubTurbo-v0.5.jar</serverURI>
-        	<version>0.5</version>
+        	<serverURI>https://github.com/HubTurbo/HubTurbo/releases/download/v0.5.5/HubTurbo-v0.55.jar</serverURI>
+        	<version>0.55</version>
     	</component>
 	</components>
     <mainJAR>HubTurbo.jar</mainJAR>
