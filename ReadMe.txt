@@ -15,3 +15,5 @@ Format of configuration file:
 		</component>
 	</components>
 </application>
+
+The program can be distributed without its initial configuration file. If distributed without the configuration file, the program will download the file from the path set by the constant DEFAULT_XML_PATH in htlauncher.updater.UpdateDataManager.java
