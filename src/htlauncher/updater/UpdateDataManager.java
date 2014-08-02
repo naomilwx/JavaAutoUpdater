@@ -13,12 +13,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class UpdateDataManager {
 	protected static final String DEFAULT_XML_PATH = "https://raw.githubusercontent.com/naomilwx/JavaAutoUpdater/master/HubTurbo.xml";
+	protected static final String UPDATE_FOLDER = "update/";
+	protected static final String LAUNCH_FOLDER = "app/";
 	protected static final String UPDATER_INFO_FILEPATH = "updater_data";
 	private static final String SPLIT_MARKER = "<-sp->";
 	
@@ -33,8 +38,48 @@ public class UpdateDataManager {
 		this.appInfoFilepath = appInfoPath;
 		updaterInfoFile = new File(UPDATER_INFO_FILEPATH);
 		appInfoFile = new File(appInfoFilepath);
+		moveLastDownload();
 		loadUpdaterData();
 	}
+	
+	protected void moveLastDownload(){
+		try {
+			File downloadDir = new File(UPDATE_FOLDER);
+			if(downloadDir.exists()){
+				moveAndReplaceFolder(UPDATE_FOLDER, LAUNCH_FOLDER);
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void moveAndReplaceFolder(String source, String dest) throws IOException{
+		File destDir = new File(dest);
+		if(destDir.exists()){
+			remove(destDir);
+		}
+		Files.move(Paths.get(source), Paths.get(dest),
+				StandardCopyOption.REPLACE_EXISTING);
+	}
+	
+	protected void remove(File filePath){
+		if(filePath.isDirectory()){
+			String[] dirItems = filePath.list();
+			if(dirItems.length == 0){
+				filePath.delete();
+			}else{
+				for(String item: dirItems){
+					File itemPath = new File(filePath, item);
+					remove(itemPath);
+				}
+			}
+		}else{
+			filePath.delete();
+		}
+	}
+	
 	
 	protected void updateDownloadedVersion(String name, double version){
 		downloadedVersions.put(name, version);
