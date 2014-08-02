@@ -15,6 +15,7 @@ public class UpdateManager {
 	private FileDownloader downloader;
 	private URI appInfoURI;
 	private DownloadProgressDisplay downloadProgress;
+	private boolean applicationUpdated = false;
 	
 	public UpdateManager(String appInfoPath) throws URISyntaxException{
 		setupComponents(appInfoPath);
@@ -28,6 +29,7 @@ public class UpdateManager {
 	}
 	
 	public void runUpdate(boolean firstRun){
+		applicationUpdated = false;
 		if(checkServerConnection()){
 			if(firstRun){
 				downloadProgress.showProgressWindow();
@@ -37,8 +39,10 @@ public class UpdateManager {
 				downloadProgress.hideProgressWindow();
 				dataManager.moveLastDownload();
 			}else{
-				Utilities.showMessage("Application updated", 
-						dataManager.getAppName() +" has been successfully updated. Restart application to get the latest update.");
+				if(applicationUpdated == true){
+					Utilities.showMessage("Application updated", 
+							dataManager.getAppName() +" has been successfully updated. Restart application to get the latest update.");
+				}
 			}
 		}
 	}
@@ -72,6 +76,7 @@ public class UpdateManager {
 			downloader.removeBackups();
 		}else{
 			downloader.rollBack();
+			applicationUpdated = false;
 		}
 	}
 	
@@ -95,6 +100,7 @@ public class UpdateManager {
 			if(success){
 				//update success: update downloaded component version
 				dataManager.updateDownloadedVersion(name, latestVer);
+				applicationUpdated = true;
 			}
 		}
 		return success;
