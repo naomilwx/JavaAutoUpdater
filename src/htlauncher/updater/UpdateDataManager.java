@@ -47,7 +47,7 @@ public class UpdateDataManager {
 		try {
 			File downloadDir = new File(UPDATE_FOLDER);
 			if(downloadDir.exists() && downloadDir.list().length > 0){
-				moveAndReplaceFolder(UPDATE_FOLDER, LAUNCH_FOLDER);
+				moveAndReplaceExistingFiles(UPDATE_FOLDER, LAUNCH_FOLDER);
 			}
 			
 		} catch (IOException e) {
@@ -62,6 +62,26 @@ public class UpdateDataManager {
 			downloadDir.mkdir();
 		}
 	}
+	
+	private void moveAndReplaceExistingFiles(String source, String dest) throws IOException{
+		File destDir = new File(dest);
+		if(!destDir.exists()){
+			destDir.mkdir();
+		}
+		File sourceDir = new File(source);
+		String[] items = sourceDir.list();
+		for(String item: items){
+			File itemFile = new File(sourceDir, item);
+			File destItemFile = new File(destDir, item);
+			if(itemFile.isDirectory()){
+				moveAndReplaceFolder(itemFile.toString(), destItemFile.toString());
+			}else{
+				Files.move(itemFile.toPath(), destItemFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			}
+		}
+	}
+	
+	
 	
 	private void moveAndReplaceFolder(String source, String dest) throws IOException{
 		File destDir = new File(dest);
