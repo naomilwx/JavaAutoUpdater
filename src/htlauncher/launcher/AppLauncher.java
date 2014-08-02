@@ -43,6 +43,9 @@ public class AppLauncher {
 	
 	public boolean launchAppIfPathExists(){
 		String launchPath = updater.getAppLaunchPath();
+		if(launchPath.isEmpty()){
+			return false;
+		}
 		File path = new File(launchPath);
 		if(path.exists()){
 			launchApp(launchPath);

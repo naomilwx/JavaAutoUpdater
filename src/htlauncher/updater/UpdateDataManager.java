@@ -188,15 +188,21 @@ public class UpdateDataManager {
 	
 	protected String getAppLaunchPath(){
 		if(appDescriptor == null){
-			loadAppData();
+			if(!loadAppData()){
+				return "";
+			}
 		}
 		String path = LAUNCH_FOLDER + appDescriptor.getLaunchPath().toString();
 		return path;
 	}
 	
-	protected void loadAppData(){
-		appDescriptor = AppDescriptor.unserialiseFromXMLFile(appInfoFile);
-		serverAppInfoURI = appDescriptor.getserverAppDescriptorURI();
+	protected boolean loadAppData(){
+		if(appInfoFile.exists()){
+			appDescriptor = AppDescriptor.unserialiseFromXMLFile(appInfoFile);
+			serverAppInfoURI = appDescriptor.getserverAppDescriptorURI();
+			return true;
+		}
+		return false;
 	}
 	
 	protected ArrayList<ComponentDescriptor> getAppComponents(){
