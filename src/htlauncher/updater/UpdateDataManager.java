@@ -216,4 +216,8 @@ public class UpdateDataManager {
 		}
 		return serverAppInfoURI;
 	}
+	
+	protected String getAppName(){
+		return appDescriptor.getAppName();
+	}
 }

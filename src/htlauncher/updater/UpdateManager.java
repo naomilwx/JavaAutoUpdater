@@ -36,6 +36,9 @@ public class UpdateManager {
 			if(firstRun){
 				downloadProgress.hideProgressWindow();
 				dataManager.moveLastDownload();
+			}else{
+				Utilities.showMessage("Application updated", 
+						dataManager.getAppName() +" has been successfully updated. Restart application to get the latest update.");
 			}
 		}
 	}

@@ -28,6 +28,9 @@ public class AppDescriptor {
 	@XmlAttribute(name = "URI")
 	private URI serverAppDescriptorURI;
 	
+	@XmlAttribute(name = "appName")
+	private String appName;
+	
 	@XmlElementWrapper(name="components")
 	@XmlElement(name="component")
 	private ArrayList<ComponentDescriptor> components;
@@ -66,6 +69,14 @@ public class AppDescriptor {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public String getAppName(){
+		return appName;
+	}
+	
+	public void setAppName(String name){
+		this.appName = name;
 	}
 	
 	public URI getserverAppDescriptorURI(){
