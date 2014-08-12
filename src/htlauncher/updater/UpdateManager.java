@@ -40,7 +40,7 @@ public class UpdateManager {
 				dataManager.moveLastDownload();
 			}else{
 				if(applicationUpdated == true){
-					Utilities.showMessage("Application updated", 
+					Utilities.showMessageOnTop("Application updated", 
 							dataManager.getAppName() +" has been successfully updated. Restart application to get the latest update.");
 				}
 			}
