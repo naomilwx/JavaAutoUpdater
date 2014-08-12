@@ -1,5 +1,7 @@
 package htlauncher.utilities;
 
+import java.awt.Frame;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -16,8 +18,24 @@ public class Utilities {
 		showDialogWindow(title, message, JOptionPane.PLAIN_MESSAGE);
 	}
 	
+	public static void showMessageOnTop(String title, String message){
+		showTopDialogWindow(title, message, JOptionPane.PLAIN_MESSAGE);
+	}
+	
 	private static void showDialogWindow(String title, String message, int dialogType){
 		JFrame frame = new JFrame();
+		JOptionPane.showMessageDialog(frame,
+			    message,
+			    title,
+			    dialogType);
+	}
+	
+	private static void showTopDialogWindow(String title, String message, int dialogType){
+		JFrame frame = new JFrame();
+		if(frame.getState() != Frame.NORMAL){
+			frame.setState(Frame.NORMAL);
+		}
+		frame.toFront();
 		JOptionPane.showMessageDialog(frame,
 			    message,
 			    title,
